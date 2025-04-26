@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSA International Financial Analysis (2004)</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    <script>
+        // Global chart styling
+        Chart.defaults.font.family = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
+        Chart.defaults.font.size = 12;
+        Chart.defaults.font.style = 'normal';
+        Chart.defaults.plugins.legend.position = 'right';
+        Chart.defaults.plugins.legend.labels.font = {
+            family: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+            size: 12,
+            style: 'normal'
+        };
+        Chart.defaults.plugins.title.font = {
+            family: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+            size: 14,
+            weight: '600',
+            style: 'normal'
+        };
+        
+        // Additional customization for horizontal bar charts
+        Chart.defaults.set('plugins.tooltip', {
+            callbacks: {
+                label: function(context) {
+                    if (context.raw) {
+                        return '$' + context.raw.toLocaleString();
+                    }
+                    return '';
+                }
+            }
+        });
+    </script>
+        
+        
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>OSA International Financial Analysis</h1>
+            <div class="dashboard-date">Comprehensive Annual Review: 2004</div>
+        </div>
+    </header>
+
+    <nav class="nav-menu">
+        <div class="nav-container">
+            <a href="index.html" class="nav-link active">Annual Overview</a>
+            <a href="january.html" class="nav-link">January</a>
+            <a href="february.html" class="nav-link">February</a>
+            <a href="march.html" class="nav-link">March</a>
+            <a href="april.html" class="nav-link">April</a>
+            <a href="may.html" class="nav-link">May</a>
+            <a href="june.html" class="nav-link">June</a>
+            <a href="july.html" class="nav-link">July</a>
+            <a href="oct-nov.html" class="nav-link">Oct-Nov</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="summary-stats">
+            <div class="stat-card">
+                <h3>Total Annual Budget</h3>
+                <div class="stat-value">$4.63M</div>
+            </div>
+            <div class="stat-card">
+                <h3>Top 5 Recipients</h3>
+                <div class="stat-value">$1.26M</div>
+            </div>
+            <div class="stat-card">
+                <h3>Monthly Retainers</h3>
+                <div class="stat-value">$29,300</div>
+            </div>
+            <div class="stat-card">
+                <h3>Legal vs. PR Ratio</h3>
+                <div class="stat-value">1.51:1</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">Top Fund Recipients (2004)</div>
+            <div class="card-body">
+                <div class="grid-container one-col">
+                    <div class="bar-chart-container">
+                        <canvas id="topRecipientsBarChart"></canvas>
+                    </div>
+                    <div class="pie-chart-container">
+                        <div class="pie-chart-wrapper">
+                            <canvas id="topRecipientsPieChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Recipient</th>
+                            <th>Category</th>
+                            <th>Total Received</th>
+                            <th>% of Top 5</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Bisceglie & Walsh</td>
+                            <td>PR</td>
+                            <td>$321,300</td>
+                            <td>25.4%</td>
+                        </tr>
+                        <tr>
+                            <td>Rabinowitz Boudin</td>
+                            <td>Legal</td>
+                            <td>$315,981</td>
+                            <td>25.0%</td>
+                        </tr>
+                        <tr>
+                            <td>Zuckert Scoutt</td>
+                            <td>Legal</td>
+                            <td>$307,235</td>
+                            <td>24.3%</td>
+                        </tr>
+                        <tr>
+                            <td>Latham & Watkins</td>
+                            <td>Legal</td>
+                            <td>$231,169</td>
+                            <td>18.3%</td>
+                        </tr>
+                        <tr>
+                            <td>Grieboski</td>
+                            <td>PR</td>
+                            <td>$87,600</td>
+                            <td>6.9%</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td colspan="2"><strong>Total</strong></td>
+                            <td><strong>$1,263,285</strong></td>
+                            <td><strong>100%</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="insight-box">
+                    <h4>Key Insights:</h4>
+                    <ul>
+                        <li>The top 5 recipients accounted for approximately $1.26M in expenditures during 2004</li>
+                        <li>Legal firms received 67.6% of the top 5 expenditures, with PR firms receiving 32.4%</li>
+                        <li>Bisceglie & Walsh was the highest-paid individual vendor at $321,300</li>
+                        <li>Three law firms (Zuckert Scoutt, Rabinowitz Boudin, and Latham & Watkins) collectively received over $854,385</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">Monthly Professional Retainers (2004)</div>
+            <div class="card-body">
+                <div class="grid-container one-col">
+                    <div class="bar-chart-container">
+                        <canvas id="retainersBarChart"></canvas>
+                    </div>
+                    <div class="pie-chart-container">
+                        <div class="pie-chart-wrapper">
+                            <canvas id="retainersPieChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Professional/Firm</th>
+                            <th>Category</th>
+                            <th>Monthly Retainer</th>
+                            <th>Annual Total</th>
+                            <th>% of Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Bisceglie & Walsh</td>
+                            <td>PR</td>
+                            <td>$8,500</td>
+                            <td>$102,000</td>
+                            <td>29.0%</td>
+                        </tr>
+                        <tr>
+                            <td>Moxon & Kobrin</td>
+                            <td>Legal</td>
+                            <td>$6,800</td>
+                            <td>$81,600</td>
+                            <td>23.2%</td>
+                        </tr>
+                        <tr>
+                            <td>Grieboski</td>
+                            <td>PR</td>
+                            <td>$4,500</td>
+                            <td>$54,000</td>
+                            <td>15.4%</td>
+                        </tr>
+                        <tr>
+                            <td>Abelson</td>
+                            <td>Legal</td>
+                            <td>$4,000</td>
+                            <td>$48,000</td>
+                            <td>13.7%</td>
+                        </tr>
+                        <tr>
+                            <td>Greg Mitchell</td>
+                            <td>PR</td>
+                            <td>$3,000</td>
+                            <td>$36,000</td>
+                            <td>10.2%</td>
+                        </tr>
+                        <tr>
+                            <td>David Miller</td>
+                            <td>PR</td>
+                            <td>$2,500</td>
+                            <td>$30,000</td>
+                            <td>8.5%</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td colspan="2"><strong>Total</strong></td>
+                            <td><strong>$29,300</strong></td>
+                            <td><strong>$351,600</strong></td>
+                            <td><strong>100%</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="insight-box">
+                    <h4>Key Insights:</h4>
+                    <ul>
+                        <li>Monthly professional retainer costs totaled approximately $29,300 per month</li>
+                        <li>Annual professional retainer expenditure reached $351,600</li>
+                        <li>Bisceglie & Walsh was the highest-paid retainer at $8,500 monthly ($102,000 annually)</li>
+                        <li>PR professionals received 63.1% of retainer payments, while legal professionals received 36.9%</li>
+                        <li>These retainers represent approximately 7.6% of the annual budget</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">Quarterly Expenditure Analysis (2004)</div>
+            <div class="card-body">
+                <div class="chart-container">
+                    <canvas id="quarterlyBarChart"></canvas>
+                </div>
+                
+                <div class="summary-stats">
+                    <div class="stat-card">
+                        <h3>Total Legal Expenses</h3>
+                        <div class="stat-value">$1,225,864</div>
+                        <p>41.5% of total</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total PR Expenses</h3>
+                        <div class="stat-value">$812,323</div>
+                        <p>27.5% of total</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total Investigation Expenses</h3>
+                        <div class="stat-value">$894,265</div>
+                        <p>30.3% of total</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Annual Total</h3>
+                        <div class="stat-value">$2,932,452</div>
+                        <p>100%</p>
+                    </div>
+                </div>
+                
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Quarter</th>
+                            <th>Legal Expenses</th>
+                            <th>PR Expenses</th>
+                            <th>Investigation Expenses</th>
+                            <th>Quarterly Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Q1 2004</td>
+                            <td>$293,850</td>
+                            <td>$211,758</td>
+                            <td>$230,085</td>
+                            <td>$735,693</td>
+                        </tr>
+                        <tr>
+                            <td>Q2 2004</td>
+                            <td>$300,622</td>
+                            <td>$196,209</td>
+                            <td>$231,935</td>
+                            <td>$728,766</td>
+                        </tr>
+                        <tr>
+                            <td>Q3 2004</td>
+                            <td>$313,707</td>
+                            <td>$197,356</td>
+                            <td>$221,278</td>
+                            <td>$732,341</td>
+                        </tr>
+                        <tr>
+                            <td>Q4 2004</td>
+                            <td>$317,685</td>
+                            <td>$207,000</td>
+                            <td>$210,967</td>
+                            <td>$735,652</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td><strong>Total</strong></td>
+                            <td><strong>$1,225,864</strong></td>
+                            <td><strong>$812,323</strong></td>
+                            <td><strong>$894,265</strong></td>
+                            <td><strong>$2,932,452</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="insight-box">
+                    <h4>Quarterly Trends:</h4>
+                    <ul>
+                        <li>Legal expenses increased every quarter, growing by 8.1% from Q1 to Q4</li>
+                        <li>PR expenses declined in Q2 but began recovering in Q3 and Q4</li>
+                        <li>Investigation expenses remained relatively stable but showed a slight downward trend in Q4</li>
+                        <li>Q4 showed the highest legal spending but the lowest investigation spending</li>
+                        <li>Overall quarterly totals remained remarkably consistent throughout the year</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">CSI Investigation Expenditures (2004)</div>
+            <div class="card-body">
+                <div class="chart-container">
+                    <canvas id="investigationsLineChart"></canvas>
+                </div>
+                
+                <div class="summary-stats">
+                    <div class="stat-card">
+                        <h3>CSI Invest (Abelson)</h3>
+                        <div class="stat-value">$170,948</div>
+                        <p>65.9% of CSI total</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>CSI Invest (M&K)</h3>
+                        <div class="stat-value">$88,065</div>
+                        <p>34.1% of CSI total</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total CSI Expenses</h3>
+                        <div class="stat-value">$259,013</div>
+                        <p>29.0% of investigation budget</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Peak Monthly CSI</h3>
+                        <div class="stat-value">$26,553</div>
+                        <p>June 2004</p>
+                    </div>
+                </div>
+                
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Month</th>
+                            <th>CSI Invest (Abelson)</th>
+                            <th>CSI Invest (M&K)</th>
+                            <th>Monthly Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>January</td>
+                            <td>$16,425</td>
+                            <td>$7,640</td>
+                            <td>$24,065</td>
+                        </tr>
+                        <tr>
+                            <td>February</td>
+                            <td>$17,125</td>
+                            <td>$6,800</td>
+                            <td>$23,925</td>
+                        </tr>
+                        <tr>
+                            <td>March</td>
+                            <td>$16,875</td>
+                            <td>$6,800</td>
+                            <td>$23,675</td>
+                        </tr>
+                        <tr>
+                            <td>April</td>
+                            <td>$14,033</td>
+                            <td>$7,450</td>
+                            <td>$21,483</td>
+                        </tr>
+                        <tr>
+                            <td>May</td>
+                            <td>$16,333</td>
+                            <td>$7,800</td>
+                            <td>$24,133</td>
+                        </tr>
+                        <tr>
+                            <td>June</td>
+                            <td>$18,453</td>
+                            <td>$8,100</td>
+                            <td>$26,553</td>
+                        </tr>
+                        <tr>
+                            <td>July</td>
+                            <td>$14,646</td>
+                            <td>$8,250</td>
+                            <td>$22,896</td>
+                        </tr>
+                        <tr>
+                            <td>August</td>
+                            <td>$13,896</td>
+                            <td>$8,300</td>
+                            <td>$22,196</td>
+                        </tr>
+                        <tr>
+                            <td>September</td>
+                            <td>$14,246</td>
+                            <td>$8,175</td>
+                            <td>$22,421</td>
+                        </tr>
+                        <tr>
+                            <td>October</td>
+                            <td>$14,396</td>
+                            <td>$7,800</td>
+                            <td>$22,196</td>
+                        </tr>
+                        <tr>
+                            <td>November</td>
+                            <td>$14,520</td>
+                            <td>$7,950</td>
+                            <td>$22,470</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td><strong>Total</strong></td>
+                            <td><strong>$170,948</strong></td>
+                            <td><strong>$88,065</strong></td>
+                            <td><strong>$259,013</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="insight-box">
+                    <h4>Investigation Spending Insights:</h4>
+                    <ul>
+                        <li>CSI Investigation costs totaled $259,013 in 2004</li>
+                        <li>Abelson-related investigation costs ($170,948) were consistently higher than M&K-related costs ($88,065)</li>
+                        <li>The highest monthly investigation spending occurred in June ($26,553)</li>
+                        <li>M&K-related costs showed a gradual increase over the year, while Abelson costs fluctuated more significantly</li>
+                        <li>Together, these two CSI expense categories represent approximately 29% of the total investigation budget</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">Executive Summary: OSA International Financial Analysis (2004)</div>
+            <div class="card-body">
+                <h3>Key Findings</h3>
+                <p>This comprehensive analysis of OSA International's financial data from January through November 2004 reveals several important trends and patterns:</p>
+                
+                <ol>
+                    <li><strong>Overall Financial Stability</strong>: Throughout 2004, OSA maintained a relatively stable weekly budget of approximately $90,000, which slightly decreased to $89,000 in the latter half of the year. The annual budget projection remained consistent at $4.6-4.7M.</li>
+                    
+                    <li><strong>Financial Health Fluctuations</strong>: The organization experienced significant variations in its financial health, as measured by the bills-to-setasides ratio:
+                        <ul>
+                            <li>The ratio worsened from January (0.97) to June (1.47), indicating financial strain</li>
+                            <li>April and August showed the strongest financial positions with ratios of 0.63 and 0.67 respectively</li>
+                            <li>By October-November, the ratio had stabilized at 0.93, showing improvement from mid-year challenges</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Bureau Budget Allocations</strong>: The three main bureaus consistently received the bulk of funding:
+                        <ul>
+                            <li>Legal Bureau: Consistently received the largest allocation (40.8% on average)</li>
+                            <li>PR Bureau: Maintained a stable allocation (27.9% on average)</li>
+                            <li>Investigation Bureau: Slight decrease in allocation (31.3% on average)</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Major Recipients</strong>: The top five recipients of funds were:
+                        <ul>
+                            <li>Bisceglie & Walsh: $321,300 (25.4% of top five spending)</li>
+                            <li>Rabinowitz Boudin: $315,981 (25.0%)</li>
+                            <li>Zuckert Scoutt: $307,235 (24.3%)</li>
+                            <li>Latham & Watkins: $231,169 (18.3%)</li>
+                            <li>Grieboski: $87,600 (6.9%)</li>
+                        </ul>
+                    </li>
+                    
+                    <li><strong>Professional Retainers</strong>: Exceptionally stable throughout the year, with only minor fluctuations:
+                        <ul>
+                            <li>Total monthly retainer budget: $29,300 ($351,600 annually)</li>
+                            <li>PR professionals received 63.1% of retainer payments</li>
+                            <li>Legal professionals received 36.9% of retainer payments</li>
+                        </ul>
+                    </li>
+                </ol>
+                
+                <div class="chart-container half">
+                    <canvas id="summaryChart"></canvas>
+                </div>
+                
+                <h3>Conclusions</h3>
+                <p>The financial data indicates that OSA International navigated through varying financial conditions in 2004, with mid-year challenges (particularly June) followed by recovery in the second half of the year. The emphasis on legal activities remained constant, while significant shifts occurred in creditor relationships. The organization maintained stable professional retainer relationships throughout the period, suggesting continuity in key external partnerships despite financial fluctuations.</p>
+                
+                <p>The improvement in financial health metrics by the end of the analyzed period suggests that corrective measures taken during the mid-year financial strain were effective, positioning the organization on a more sustainable financial trajectory entering 2005.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>Financial data from OSA International documents, January-November 2004</p>
+        </div>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Top Recipients Bar Chart
+        const topRecipientsBarCtx = document.getElementById('topRecipientsBarChart').getContext('2d');
+            
+        new Chart(topRecipientsBarCtx, {
+                type: 'bar',
+            data: {
+                labels: ['Bisceglie & Walsh', 'Rabinowitz Boudin', 'Zuckert Scoutt', 'Latham & Watkins', 'Grieboski'],
+                datasets: [{
+                    label: 'Total Funds Received',
+                    data: [321300, 315981, 307235, 231169, 87600],
+                    backgroundColor: [
+                        '#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: true,
+                layout: {
+                    padding: 10
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Top 5 Recipients by Amount (2004)'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return '$' + context.raw.toLocaleString();
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: {
+                            callback: function(value) {
+                                return '$' + value.toLocaleString();
+                            }
+                        }
+                    },
+                    y: {
+                        ticks: {
+                            font: {
+                                family: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+                                size: 12,
+                                style: 'normal'
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Top Recipients Pie Chart
+        const topRecipientsPieCtx = document.getElementById('topRecipientsPieChart').getContext('2d');
+            
+        new Chart(topRecipientsPieCtx, {
+                type: 'pie',
+            data: {
+                labels: ['Bisceglie & Walsh', 'Rabinowitz Boudin', 'Zuckert Scoutt', 'Latham & Watkins', 'Grieboski'],
+                datasets: [{
+                    data: [321300, 315981, 307235, 231169, 87600],
+                    backgroundColor: [
+                        '#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                layout: {
+                    padding: 10
+                },
+                plugins: {
+                    legend: {
+                        position: 'right',
+                        align: 'center'
+                    },
+                    title: {
+                        display: true,
+                        text: 'Distribution of Top 5 Recipients'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label;
+                                const value = context.raw;
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const percentage = Math.round((value / total) * 100);
+                                return `${label}: $${value.toLocaleString()} (${percentage}%)`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Retainers Bar Chart
+        const retainersBarCtx = document.getElementById('retainersBarChart').getContext('2d');
+            
+        new Chart(retainersBarCtx, {
+                type: 'bar',
+            data: {
+                labels: ['Bisceglie & Walsh', 'Moxon & Kobrin', 'Grieboski', 'Abelson', 'Greg Mitchell', 'David Miller'],
+                datasets: [{
+                    label: 'Annual Retainer Total',
+                    data: [102000, 81600, 54000, 48000, 36000, 30000],
+                    backgroundColor: [
+                        '#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: true,
+                layout: {
+                    padding: 10
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Annual Retainer Expenditure by Recipient'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return '$' + context.raw.toLocaleString();
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        ticks: {
+                            callback: function(value) {
+                                return '$' + value.toLocaleString();
+                            }
+                        }
+                    },
+                    y: {
+                        ticks: {
+                            font: {
+                                family: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+                                size: 12,
+                                style: 'normal'
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Retainers Pie Chart
+        const retainersPieCtx = document.getElementById('retainersPieChart').getContext('2d');
+            
+        new Chart(retainersPieCtx, {
+                type: 'pie',
+            data: {
+                labels: ['Bisceglie & Walsh', 'Moxon & Kobrin', 'Grieboski', 'Abelson', 'Greg Mitchell', 'David Miller'],
+                datasets: [{
+                    data: [102000, 81600, 54000, 48000, 36000, 30000],
+                    backgroundColor: [
+                        '#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8', '#82ca9d'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                layout: {
+                    padding: 10
+                },
+                plugins: {
+                    legend: {
+                        position: 'right',
+                        align: 'center'
+                    },
+                    title: {
+                        display: true,
+                        text: 'Distribution of Professional Retainers'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label;
+                                const value = context.raw;
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const percentage = Math.round((value / total) * 100);
+                                return `${label}: $${value.toLocaleString()} (${percentage}%)`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Quarterly Bar Chart
+        const quarterlyBarCtx = document.getElementById('quarterlyBarChart').getContext('2d');
+            
+        new Chart(quarterlyBarCtx, {
+                type: 'bar',
+            data: {
+                labels: ['Q1 2004', 'Q2 2004', 'Q3 2004', 'Q4 2004'],
+                datasets: [
+                    {
+                        label: 'Legal Expenses',
+                        data: [293850, 300622, 313707, 317685],
+                        backgroundColor: '#0088FE'
+                    },
+                    {
+                        label: 'PR Expenses',
+                        data: [211758, 196209, 197356, 207000],
+                        backgroundColor: '#00C49F'
+                    },
+                    {
+                        label: 'Investigation Expenses',
+                        data: [230085, 231935, 221278, 210967],
+                        backgroundColor: '#FFBB28'
+                    }
+                ]
+            },
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Quarterly Expenditure by Category (2004)'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': $' + context.raw.toLocaleString();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Investigations Line Chart
+        const investigationsLineCtx = document.getElementById('investigationsLineChart').getContext('2d');
+            
+        new Chart(investigationsLineCtx, {
+                type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov'],
+                datasets: [
+                    {
+                        label: 'CSI Invest (Abelson)',
+                        data: [16425, 17125, 16875, 14033, 16333, 18453, 14646, 13896, 14246, 14396, 14520],
+                        borderColor: '#0088FE',
+                        backgroundColor: 'rgba(0, 136, 254, 0.1)',
+                        borderWidth: 2,
+                        tension: 0.1
+                    },
+                    {
+                        label: 'CSI Invest (M&K)',
+                        data: [7640, 6800, 6800, 7450, 7800, 8100, 8250, 8300, 8175, 7800, 7950],
+                        borderColor: '#00C49F',
+                        backgroundColor: 'rgba(0, 196, 159, 0.1)',
+                        borderWidth: 2,
+                        tension: 0.1
+                    }
+                ]
+            },
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Monthly CSI Investigation Expenses (2004)'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': $' + context.raw.toLocaleString();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Summary Chart
+        const summaryChartCtx = document.getElementById('summaryChart').getContext('2d');
+            
+        new Chart(summaryChartCtx, {
+                type: 'bar',
+            data: {
+                labels: ['Legal', 'PR', 'Investigations'],
+                datasets: [
+                    {
+                        label: 'Q1',
+                        data: [293850, 211758, 230085],
+                        backgroundColor: '#0088FE'
+                    },
+                    {
+                        label: 'Q2',
+                        data: [300622, 196209, 231935],
+                        backgroundColor: '#00C49F'
+                    },
+                    {
+                        label: 'Q3',
+                        data: [313707, 197356, 221278],
+                        backgroundColor: '#FFBB28'
+                    },
+                    {
+                        label: 'Q4',
+                        data: [317685, 207000, 210967],
+                        backgroundColor: '#FF8042'
+                    }
+                ]
+            },
+            options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Expenditure by Bureau and Quarter (2004)'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': $' + context.raw.toLocaleString();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    });
+    </script>
+</body>
+</html>

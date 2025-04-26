@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSA International Financial Dashboard (July-August 2004)</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    <script>
+        // Global chart styling
+        Chart.defaults.font.family = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
+        Chart.defaults.font.size = 12;
+        Chart.defaults.font.style = 'normal';
+        Chart.defaults.plugins.legend.position = 'right';
+        Chart.defaults.plugins.legend.labels.font = {
+            family: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+            size: 12,
+            style: 'normal'
+        };
+        Chart.defaults.plugins.title.font = {
+            family: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+            size: 14,
+            weight: '600',
+            style: 'normal'
+        };
+    </script>
+        
+        
+        
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.6.1/d3.min.js"></script>
+    
+    <link rel="stylesheet" href="styles.css">`n</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>OSA International Financial Dashboard</h1>
+            <div class="dashboard-date">July - August 2004</div>
+        </div>
+    </header>
+
+    <nav class="nav-menu">
+        <div class="nav-container">
+            <a href="index.html" class="nav-link">Annual Overview</a>
+            <a href="january.html" class="nav-link">January</a>
+            <a href="february.html" class="nav-link">February</a>
+            <a href="march.html" class="nav-link">March</a>
+            <a href="april.html" class="nav-link">April</a>
+            <a href="may.html" class="nav-link">May</a>
+            <a href="june.html" class="nav-link">June</a>
+            <a href="july.html" class="nav-link active">July</a>
+            <a href="oct-nov.html" class="nav-link">Oct-Nov</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="summary-stats">
+            <div class="stat-card">
+                <h3>Weekly FP Budget</h3>
+                <div class="stat-value">$89,000</div>
+            </div>
+            <div class="stat-card">
+                <h3>Annual Projection</h3>
+                <div class="stat-value">$4.6M</div>
+            </div>
+            <div class="stat-card">
+                <h3>Outstanding Bills</h3>
+                <div class="stat-value">$212,112</div>
+            </div>
+            <div class="stat-card">
+                <h3>Total Setasides</h3>
+                <div class="stat-value">$273,093</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">Bureau Budget Allocation (August 5, 2004)</div>
+            <div class="card-body">
+                <div class="chart-container">
+                    <canvas id="budgetAllocationChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid-container">
+            <div class="card">
+                <div class="card-header">Legal Bureau Expenses</div>
+                <div class="card-body">
+                    <div class="chart-container half">
+                        <canvas id="legalExpensesChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">PR Bureau Expenses</div>
+                <div class="card-body">
+                    <div class="chart-container half">
+                        <canvas id="prExpensesChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">Investigation Bureau Expenses</div>
+            <div class="card-body">
+                <div class="chart-container half">
+                    <canvas id="investExpensesChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">Top Creditors</div>
+            <div class="card-body">
+                <div class="chart-container">
+                    <canvas id="topCreditorsChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">Bureau Condition Status</div>
+            <div class="card-body">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Bureau</th>
+                            <th>July 15, 2004</th>
+                            <th>July 22, 2004</th>
+                            <th>Aug 5, 2004</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Executive</td>
+                            <td>NORMAL</td>
+                            <td>NORMAL</td>
+                            <td>NORMAL</td>
+                        </tr>
+                        <tr>
+                            <td>HCO</td>
+                            <td>EMERGENCY</td>
+                            <td>EMERGENCY</td>
+                            <td>EMERGENCY</td>
+                        </tr>
+                        <tr>
+                            <td>Dissem</td>
+                            <td>DANGER</td>
+                            <td>DANGER</td>
+                            <td>NORMAL</td>
+                        </tr>
+                        <tr>
+                            <td>Treasury</td>
+                            <td>NORMAL</td>
+                            <td>NORMAL</td>
+                            <td>NORMAL</td>
+                        </tr>
+                        <tr>
+                            <td>Invest</td>
+                            <td>EMERGENCY</td>
+                            <td>EMERGENCY</td>
+                            <td>NORMAL</td>
+                        </tr>
+                        <tr>
+                            <td>Public Relations</td>
+                            <td>NORMAL</td>
+                            <td>NORMAL</td>
+                            <td>NORMAL</td>
+                        </tr>
+                        <tr>
+                            <td>Legal</td>
+                            <td>AFFLUENCE</td>
+                            <td>NORMAL</td>
+                            <td>NORMAL</td>
+                        </tr>
+                        <tr>
+                            <td>Social Reform</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                            <td>N/A</td>
+                        </tr>
+                        <tr>
+                            <td>Port Captain</td>
+                            <td>NORMAL</td>
+                            <td>EMERGENCY</td>
+                            <td>EMERGENCY</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">Key Professional Retainers</div>
+            <div class="card-body">
+                <div class="chart-container">
+                    <canvas id="professionalRetainersChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">Setaside Balances by Division (Aug 5, 2004)</div>
+            <div class="card-body">
+                <div class="chart-container">
+                    <canvas id="setasideBalancesChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>Financial data from OSA International documents, July-August 2004</p>
+        </div>
+    </footer>
+
+    <script>
+        // Budget Allocation Data - From August 5, 2004 FP
+        const budgetAllocationData = {
+            labels: ['Legal Bureau', 'PR Bureau', 'Invest Bureau', 'Dissem Bureau', 'HCO Bureau', 'Executive Bureau', 'Port Captain Bureau'],
+            datasets: [{
+                data: [34791, 22155, 24881.50, 6000, 335, 587.50, 250],
+                backgroundColor: [
+                    '#2c3e50', '#e74c3c', '#3498db', '#f1c40f', 
+                    '#9b59b6', '#1abc9c', '#e67e22'
+                ],
+                borderWidth: 1
+            }]
+        };
+
+        // Legal Expenses Data - From August 5, 2004 FP
+        const legalExpensesData = {
+            labels: ['Moxon & Kobrin', 'Rabinowitz & Boudin', 'Drescher', 'Abelson', 'Yingling', 'Wilson', 'Spring', 'Other Legal'],
+            datasets: [{
+                data: [8000, 8000, 3500, 4000, 4000, 1000, 500, 5791],
+                backgroundColor: [
+                    '#3498db', '#2980b9', '#1abc9c', '#16a085', 
+                    '#f1c40f', '#f39c12', '#e67e22', '#d35400'
+                ],
+                borderWidth: 1
+            }]
+        };
+
+        // PR Expenses Data - From August 5, 2004 FP
+        const prExpensesData = {
+            labels: ['Bisceglie & Walsh', 'Grieboski', 'Greg Mitchell', 'David Miller', 'PR Events', 'Human Rights PSAs', 'Search Engines', 'Other PR'],
+            datasets: [{
+                data: [8200, 4500, 3000, 2500, 1500, 500, 500, 1455],
+                backgroundColor: [
+                    '#e74c3c', '#c0392b', '#9b59b6', '#8e44ad', 
+                    '#2c3e50', '#7f8c8d', '#95a5a6', '#bdc3c7'
+                ],
+                borderWidth: 1
+            }]
+        };
+
+        // Invest Expenses Data - From August 5, 2004 FP
+        const investExpensesData = {
+            labels: ['CSI Invest (Abelson)', 'CSI Invest (M&K)', 'Lexis Nexis', 'Internet T-1 Line', 'Internet Accounts', 'NY Times', 'LA Times', 'PRC'],
+            datasets: [{
+                data: [14646, 8250, 1535, 219, 28, 14, 16, 173.50],
+                backgroundColor: [
+                    '#3498db', '#2980b9', '#1abc9c', '#16a085', 
+                    '#f1c40f', '#f39c12', '#e67e22', '#d35400'
+                ],
+                borderWidth: 1
+            }]
+        };
+
+        // Top Creditors Data - From August 5, 2004 Bills
+        const topCreditorsData = {
+            labels: [
+                'Rabinowitz, Boudin', 'Bisceglie & Walsh', 'Latham & Watkins', 'Zuckert, Scoutt', 
+                'Wilson, Campilongo', 'Thomas C. Spring', 'Lexis-Nexis', 'American Express',
+                'Wells Fargo Bank', 'Grieboski', 'Westlaw', 'David H. Miller'
+            ],
+            datasets: [{
+                label: 'Amount Owed ($)',
+                data: [44500, 42500, 45662, 16029, 12080, 7400, 7675, 2742, 2772, 4500, 2375, 2800],
+                backgroundColor: '#3498db',
+                borderColor: '#2980b9',
+                borderWidth: 1
+            }]
+        };
+
+        // Professional Retainers Over Time
+        const professionalRetainersData = {
+            labels: ['July 15', 'July 22', 'Aug 5'],
+            datasets: [
+                {
+                    label: 'Bisceglie & Walsh',
+                    data: [7000, 6800, 8200],
+                    backgroundColor: '#3498db',
+                    borderColor: '#3498db',
+                    borderWidth: 2,
+                    fill: false },
+                {
+                    label: 'Grieboski',
+                    data: [3600, 3600, 4500],
+                    backgroundColor: '#e74c3c',
+                    borderColor: '#e74c3c',
+                    borderWidth: 2,
+                    fill: false },
+                {
+                    label: 'Greg Mitchell',
+                    data: [3000, 3000, 3000],
+                    backgroundColor: '#2ecc71',
+                    borderColor: '#2ecc71',
+                    borderWidth: 2,
+                    fill: false },
+                {
+                    label: 'David Miller',
+                    data: [2500, 2500, 2500],
+                    backgroundColor: '#f1c40f',
+                    borderColor: '#f1c40f',
+                    borderWidth: 2,
+                    fill: false }
+            ]
+        };
+
+        // Setaside Balances - From August 5, 2004 report
+        const setasideBalancesData = {
+            labels: ['PR Bureau', 'Legal Bureau', 'Invest Bureau', 'Dissem Bureau', 'HCO Bureau', 'Treasury Bureau', 'Exec Bureau', 'Social Reform', 'Port Captain'],
+            datasets: [{
+                label: 'Setaside Balance',
+                data: [78112.11, 106062.18, 12237.57, 50641.92, 8391.10, 2238.04, 742.66, 918.02, 1075.48],
+                backgroundColor: '#3498db',
+                borderColor: '#2980b9',
+                borderWidth: 1
+            }]
+        };
+
+        // Chart Configuration and Rendering
+        window.onload = function() {
+            // Budget Allocation Chart
+                
+        new Chart(document.getElementById('budgetAllocationChart'), {
+                type: 'pie',
+                data: budgetAllocationData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right' },
+                        title: {
+                            display: true,
+                            text: 'Budget Allocation by Bureau ($89,000 total)'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const value = context.raw;
+                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    const percentage = Math.round(value / total * 100);
+                                    return `$${value.toLocaleString()} (${percentage}%)`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Legal Expenses Chart
+                
+        new Chart(document.getElementById('legalExpensesChart'), {
+                type: 'doughnut',
+                data: legalExpensesData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right' },
+                        title: {
+                            display: true,
+                            text: 'Legal Bureau Budget Breakdown'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const value = context.raw;
+                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    const percentage = Math.round(value / total * 100);
+                                    return `$${value.toLocaleString()} (${percentage}%)`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // PR Expenses Chart
+                
+        new Chart(document.getElementById('prExpensesChart'), {
+                type: 'doughnut',
+                data: prExpensesData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right' },
+                        title: {
+                            display: true,
+                            text: 'PR Bureau Budget Breakdown'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const value = context.raw;
+                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    const percentage = Math.round(value / total * 100);
+                                    return `$${value.toLocaleString()} (${percentage}%)`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Invest Expenses Chart
+                
+        new Chart(document.getElementById('investExpensesChart'), {
+                type: 'doughnut',
+                data: investExpensesData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right' },
+                        title: {
+                            display: true,
+                            text: 'Investigation Bureau Budget Breakdown'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const value = context.raw;
+                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    const percentage = Math.round(value / total * 100);
+                                    return `$${value.toLocaleString()} (${percentage}%)`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Top Creditors Chart
+                
+        new Chart(document.getElementById('topCreditorsChart'), {
+                type: 'bar',
+                data: topCreditorsData,
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                            display: true,
+                            text: 'Top Creditors by Amount Owed'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `$${context.raw.toLocaleString()}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + value.toLocaleString();
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Professional Retainers Chart
+                
+        new Chart(document.getElementById('professionalRetainersChart'), {
+                type: 'line',
+                data: professionalRetainersData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Key Professional Retainers (Jul-Aug 2004)'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Amount ($)'
+                            },
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + value.toLocaleString();
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Setaside Balances Chart
+                
+        new Chart(document.getElementById('setasideBalancesChart'), {
+                type: 'bar',
+                data: setasideBalancesData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                            display: true,
+                            text: 'Setaside Balances by Division (Aug 5, 2004)'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return `$${context.raw.toLocaleString()}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + value.toLocaleString();
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        };
+    </script>
+</body>
+</html>
