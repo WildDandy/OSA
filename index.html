@@ -1,120 +1,457 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scientology 2004 Spending Analysis</title>
-    <link rel="stylesheet" href="styles.css">
-    <!-- Include Chart.js library -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <meta charset="UTF-8">
+  <title>Financial Data Analysis Dashboard - 2004 (Final)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <!-- Tailwind CSS 2.2.19 -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <!-- Chart.js 4.4.3 -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <!-- Font Awesome 6.5.2 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
+  <!-- Google Fonts (Inter) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #F8F8F6;
+      color: #212327;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+    }
+    .summary-card {
+      box-shadow: 0 2px 8px 0 rgba(34,38,61,0.07);
+    }
+    table thead tr th, table tbody tr td {
+      white-space: nowrap;
+    }
+    {
+      body {
+        background: #F8F8F6 !important;
+      }
+      .summary-card {
+        box-shadow: none !important;
+      }
+    }
+  </style>
 </head>
-<body>
-    <header>
-        <h1>Scientology 2004 Spending Analysis</h1>
-        <p>An analysis of spending patterns based on the data provided in MANUAL_COMPARISON.md (Jan-Nov 2004).</p>
-        <nav>
-            <ul>
-                <li><a href="#overview">Overview</a></li>
-                <li><a href="#recipient-spending">Spending by Recipient (Actual)</a></li>
-                <li><a href="#planned-spending">Spending by Category (Planned)</a></li>
-                <li><a href="#analysis">Key Findings</a></li>
-                <li><a href="#raw-data">Raw Data</a></li>
-            </ul>
-        </nav>
-    </header>
+<body class="antialiased">
+  <div class="max-w-7xl mx-auto px-4 py-8">
+    <!-- HEADER -->
+    <div class="mb-7 flex flex-col md:flex-row md:items-center md:justify-between">
+      <div>
+        <h1 class="text-3xl md:text-4xl font-bold mb-2 text-gray-800 tracking-tight">Financial Data Analysis Dashboard <span class="text-blue-500">(2004)</span></h1>
+      </div>
+    </div>
 
-    <main>
-        <section id="overview">
-            <h2>Overview</h2>
-            <p>This section provides a high-level view of the financial data.</p>
-            <div class="chart-container">
-                 <h3>Total Actual Monthly Spending (Bills Summary)</h3>
-                 <canvas id="totalActualMonthlySpendingChart"></canvas>
-            </div>
-             <div class="chart-container">
-                 <h3>Total Planned Monthly Spending (Proposed FP)</h3>
-                 <canvas id="totalPlannedMonthlySpendingChart"></canvas>
-            </div>
-        </section>
+    <!-- SUMMARY CARDS -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-5 mb-10">
+      <div class="summary-card bg-white rounded-2xl p-5 flex flex-col justify-between">
+        <div class="flex items-center space-x-3 mb-2">
+          <span class="text-blue-500 bg-blue-100 rounded-md p-2">
+            <i class="fas fa-money-check-alt fa-lg"></i>
+          </span>
+          <span class="font-bold text-sm text-gray-500">Total Spending</span>
+        </div>
+        <div class="text-2xl sm:text-3xl font-bold text-gray-800 mb-1">$990,465</div>
+        <span class="text-xs text-gray-400">Period: Jan - Nov 2004</span>
+      </div>
+      <div class="summary-card bg-white rounded-2xl p-5 flex flex-col justify-between">
+        <div class="flex items-center space-x-3 mb-2">
+          <span class="text-green-500 bg-green-100 rounded-md p-2">
+            <i class="fas fa-sitemap fa-lg"></i>
+          </span>
+          <span class="font-bold text-sm text-gray-500">Top Spending Bureau</span>
+        </div>
+        <div class="text-xl sm:text-2xl font-bold text-green-600 mb-1">Invest Bureau</div>
+        <span class="text-xs text-gray-400">~$250,000</span>
+      </div>
+      <div class="summary-card bg-white rounded-2xl p-5 flex flex-col justify-between">
+        <div class="flex items-center space-x-3 mb-2">
+          <span class="text-pink-500 bg-pink-100 rounded-md p-2">
+            <i class="fas fa-user-tie fa-lg"></i>
+          </span>
+          <span class="font-bold text-sm text-gray-500">Top Recipient</span>
+        </div>
+        <div class="text-xl sm:text-2xl font-bold text-pink-600 mb-1">CSI Investigations EJA (Abelson)</div>
+        <span class="text-xs text-gray-400">$159,893</span>
+      </div>
+      <div class="summary-card bg-white rounded-2xl p-5 flex flex-col justify-between">
+        <div class="flex items-center space-x-3 mb-2">
+          <span class="text-yellow-500 bg-yellow-100 rounded-md p-2">
+            <i class="fas fa-chart-line fa-lg"></i>
+          </span>
+          <span class="font-bold text-sm text-gray-500">Largest Monthly Spike</span>
+        </div>
+        <div class="text-xl sm:text-2xl font-bold text-yellow-600 mb-1">January 2004</div>
+        <span class="text-xs text-gray-400">$227,000+</span>
+      </div>
+    </div>
 
-        <section id="recipient-spending">
-            <h2>Spending by Recipient (Actual Bills Summary)</h2>
-            <p>This section shows who received payments based on the combined Monthly Bills Summary tables.</p>
-            <div class="chart-container">
-                <h3>Top 20 Creditors Overall (Jan-Nov 2004)</h3>
-                <canvas id="topCreditorsChart"></canvas>
-            </div>
-            <div class="chart-container">
-                 <h3>Monthly Payments to Top 5 Creditors</h3>
-                 <canvas id="monthlyTopCreditorsChart"></canvas>
-            </div>
-            <div class="table-container">
-                <h3>Detailed Bills Summary (Combined Main & Reserved Accounts)</h3>
-                <input type="text" id="billsSearch" placeholder="Search Creditors...">
-                <table id="actualBillsTable">
-                    <thead>
-                        <!-- Headers will be generated by JavaScript -->
-                    </thead>
-                    <tbody>
-                        <!-- Data rows will be generated by JavaScript -->
-                    </tbody>
-                </table>
-            </div>
-        </section>
+    <!-- CHARTS SECTION -->
+    <div class="grid grid-cols-1 gap-8 mb-10">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bg-white rounded-2xl p-6 flex flex-col">
+          <div class="flex items-center space-x-2 mb-2">
+            <span class="text-blue-400"><i class="fas fa-chart-area"></i></span>
+            <h2 class="text-lg font-semibold text-gray-700">Monthly Total Spending</h2>
+          </div>
+          <canvas id="monthlyTotalSpending" style="width:100%;height:300px;max-height:330px;"></canvas>
+        </div>
+        <div class="bg-white rounded-2xl p-6 flex flex-col">
+          <div class="flex items-center space-x-2 mb-2">
+            <span class="text-pink-400"><i class="fas fa-chart-pie"></i></span>
+            <h2 class="text-lg font-semibold text-gray-700">Bureau Spending Breakdown</h2>
+          </div>
+          <canvas id="bureauSpendingPie" style="width:100%;height:300px;max-height:330px;"></canvas>
+        </div>
+      </div>
+      <div class="bg-white rounded-2xl p-6 flex flex-col w-full mt-8">
+        <div class="flex items-center space-x-2 mb-2">
+          <span class="text-green-400"><i class="fas fa-signal"></i></span>
+          <h2 class="text-lg font-semibold text-gray-700">Top 10 Recipients</h2>
+        </div>
+        <canvas id="topRecipientsBar" style="width:100%;height:310px;max-height:400px;"></canvas>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+        <div class="bg-white rounded-2xl p-6 flex flex-col">
+          <div class="flex items-center space-x-2 mb-2">
+            <span class="text-yellow-400"><i class="fas fa-layer-group"></i></span>
+            <h2 class="text-lg font-semibold text-gray-700">Expense Distribution by Category</h2>
+          </div>
+          <canvas id="categoryDistributionPie" style="width:100%;height:300px;max-height:330px;"></canvas>
+        </div>
+        <div class="bg-white rounded-2xl p-6 flex flex-col">
+          <div class="flex items-center space-x-2 mb-2">
+            <span class="text-blue-300"><i class="fas fa-stream"></i></span>
+            <h2 class="text-lg font-semibold text-gray-700">Category Trends Over Time</h2>
+          </div>
+          <canvas id="categoryTrendLine" style="width:100%;height:300px;max-height:330px;"></canvas>
+        </div>
+      </div>
+    </div>
 
-        <section id="planned-spending">
-            <h2>Spending by Category (Planned - Proposed FP)</h2>
-            <p>This section shows the planned spending breakdown by Bureau and item, based on the External Financial Planning table. Note: This represents the plan, not necessarily the actual expenditure for these specific categories.</p>
-             <div class="chart-container">
-                <h3>Total Planned Spending by Bureau</h3>
-                <canvas id="plannedSpendingByBureauChart"></canvas>
-            </div>
-             <div class="table-container">
-                <h3>Detailed Proposed Financial Plan</h3>
-                 <select id="bureauFilter">
-                     <option value="">All Bureaus</option>
-                     <!-- Options will be generated by JavaScript -->
-                 </select>
-                <table id="proposedFPTable">
-                     <thead>
-                        <!-- Headers will be generated by JavaScript -->
-                    </thead>
-                    <tbody>
-                        <!-- Data rows will be generated by JavaScript -->
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <section id="analysis">
-            <h2>Key Findings & Analysis</h2>
-            <p>Summary of significant spending patterns and recipients identified from the data.</p>
-            <div id="analysis-content">
-                <!-- Analysis text will be added here, potentially generated or manually written -->
-                 <p><em>Analysis content will be developed based on the processed data.</em></p>
-                 <h3>Largest Recipients (Creditors):</h3>
-                 <ul id="largest-recipients-list"></ul>
-                 <h3>Spending Trends:</h3>
-                 <p id="spending-trends-summary"></p>
-                 <h3>Potential Links (Creditors to Planned Bureaus):</h3>
-                 <p id="creditor-bureau-links"></p>
-            </div>
-        </section>
-
-        <section id="raw-data">
-            <h2>Raw Data Source</h2>
-            <p>The analysis is based on the following data extracted from <code>MANUAL_COMPARISON.md</code>.</p>
-            <pre id="rawDataDisplay"><code>Loading raw data...</code></pre>
-        </section>
-    </main>
-
-    <footer>
-        <p>Website generated based on data from MANUAL_COMPARISON.md</p>
+    <!-- DATA TABLE: Top 30 Expense Items -->
+    <div class="bg-white rounded-2xl p-6 mb-10">
+      <div class="flex items-center space-x-2 mb-3">
+        <span class="text-purple-400"><i class="fas fa-table"></i></span>
+        <h2 class="text-lg font-semibold text-gray-700">Top 30 Expense Items</h2>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-100">
+          <thead>
+            <tr class="bg-gray-50">
+              <th class="px-4 py-2 text-xs font-bold text-left text-gray-500 uppercase cursor-pointer" onclick="sortTable(0)">Category <i class="fas fa-sort text-gray-400 ml-1"></i></th>
+              <th class="px-4 py-2 text-xs font-bold text-left text-gray-500 uppercase cursor-pointer" onclick="sortTable(1)">Item Description <i class="fas fa-sort text-gray-400 ml-1"></i></th>
+              <th class="px-4 py-2 text-xs font-bold text-right text-gray-500 uppercase cursor-pointer" onclick="sortTable(2)">Total Amount (Annual) <i class="fas fa-sort text-gray-400 ml-1"></i></th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-100" id="expense-items-body">
+            <tr><td class="px-4 py-2 text-sm font-semibold text-red-600">Legal</td><td class="px-4 py-2 text-sm text-gray-700">CSI INVESTIGATIONS EJA (ABELSON)</td><td class="px-4 py-2 text-sm text-right font-mono">$159,893</td></tr>
+            <tr><td class="px-4 py-2 text-sm font-semibold text-yellow-700">Legal</td><td class="px-4 py-2 text-sm text-gray-700">ZUCKERT, SCOUTT & RASENBERGER</td><td class="px-4 py-2 text-sm text-right font-mono">$90,000</td></tr>
+            <tr><td class="px-4 py-2 text-sm font-semibold text-yellow-700">Legal</td><td class="px-4 py-2 text-sm text-gray-700">LATHAM & WATKINS</td><td class="px-4 py-2 text-sm text-right font-mono">$72,000</td></tr>
+            <tr><td class="px-4 py-2 text-sm font-semibold text-blue-700">PR</td><td class="px-4 py-2 text-sm text-gray-700">BISCEGLIE & WALSH</td><td class="px-4 py-2 text-sm text-right font-mono">$87,500</td></tr>
+            <tr><td class="px-4 py-2 text-sm font-semibold text-green-600">Investigative</td><td class="px-4 py-2 text-sm text-gray-700">CSI INVESTIGATIONS M&K</td><td class="px-4 py-2 text-sm text-right font-mono">$84,500</td></tr>
+            <tr><td class="px-4 py-2 text-sm font-semibold text-blue-700">PR</td><td class="px-4 py-2 text-sm text-gray-700">GRIEBOSKI</td><td class="px-4 py-2 text-sm text-right font-mono">$50,900</td></tr>
+            <tr><td class="px-4 py-2 text-sm font-semibold text-yellow-700">Legal</td><td class="px-4 py-2 text-sm text-gray-700">MOXON & KOBRIN FIRM BASICS (Secondary)</td><td class="px-4 py-2 text-sm text-right font-mono">$41,000</td></tr>
+            <tr><td class="px-4 py-2 text-sm font-semibold text-yellow-700">Legal</td><td class="px-4 py-2 text-sm text-gray-700">LIEBERMAN (RABINOWITZ, BOUDIN)</td><td class="px-4 py-2 text-sm text-right font-mono">$38,000</td></tr>
+            <tr><td class="px-4 py-2 text-sm font-semibold text-green-600">Investigative</td><td class="px-4 py-2 text-sm text-gray-700">CSI INVESTIGATIONS EJA</td><td class="px-4 py-2 text-sm text-right font-mono">$37,000</td></tr>
+            <tr><td class="px-4 py-2 text-sm font-semibold text-blue-700">PR</td><td class="px-4 py-2 text-sm text-gray-700">GREG MITCHELL RETAINER</td><td class="px-4 py-2 text-sm text-right font-mono">$31,000</td></tr>
+            <tr><td class="px-4 py-2 text-sm font-semibold text-yellow-700">Legal</td><td class="px-4 py-2 text-sm text-gray-700">ABELSON</td><td class="px-4 py-2 text-sm text-right font-mono">$28,000</td></tr>
+            <tr><td class="px-4 py-2 text-sm font-semibold text-blue-700">PR</td><td class="px-4 py-2 text-sm text-gray-700">PR EVENTS</td><td class="px-4 py-2 text-sm text-right font-mono">$26,000</td></tr>
+            <tr><td class="px-4 py-2 text-sm font-semibold text-yellow-700">Legal</td><td class="px-4 py-2 text-sm text-gray-700">MOXON & KOBRIN</td><td class="px-4 py-2 text-sm text-right font-mono">$24,000</td></tr>
+            <tr><td class="px-4 py-2 text-sm font-semibold text-pink-700">Subscription</td><td class="px-4 py-2 text-sm text-gray-700">LEXIS NEXIS</td><td class="px-4 py-2 text-sm text-right font-mono">$15,100</td></tr>
+            <tr><td class="px-4 py-2 text-sm font-semibold text-blue-700">PR</td><td class="px-4 py-2 text-sm text-gray-700">PR TRAVEL</td><td class="px-4 py-2 text-sm text-right font-mono">$13,700</td></tr>
+            <tr><td class="px-4 py-2 text-sm font-semibold text-green-700">Supplies</td><td class="px-4 py-2 text-sm text-gray-700">SUPPLIES</td><td class="px-4 py-2 text-sm text-right font-mono">$11,000</td></tr>
+            <tr><td class="px-4 py-2 text-sm font-semibold text-purple-700">Utilities</td><td class="px-4 py-2 text-sm text-gray-700">INTERNET T-1 LINE</td><td class="px-4 py-2 text-sm text-right font-mono">$9,870</td></tr>
+            <tr><td class="px-4 py-2 text-sm font-semibold text-purple-700">Utilities</td><td class="px-4 py-2 text-sm text-gray-700">COPIER MAINTENANCE</td><td class="px-4 py-2 text-sm text-right font-mono">$7,880</td></tr>
+            <tr><td class="px-4 py-2 text-sm font-semibold text-blue-700">PR</td><td class="px-4 py-2 text-sm text-gray-700">SEARCH ENGINES</td><td class="px-4 py-2 text-sm text-right font-mono">$7,000</td></tr>
+            <tr><td class="px-4 py-2 text-sm font-semibold text-green-700">Supplies</td><td class="px-4 py-2 text-sm text-gray-700">SUPPLIES (SUBMISSION)</td><td class="px-4 py-2 text-sm text-right font-mono">$6,500</td></tr>
+            <tr><td class="px-4 py-2 text-sm font-semibold text-yellow-700">Legal</td><td class="px-4 py-2 text-sm text-gray-700">WESTLAW</td><td class="px-4 py-2 text-sm text-right font-mono">$6,120</td></tr>
+            <tr><td class="px-4 py-2 text-sm font-semibold text-purple-700">Utilities</td><td class="px-4 py-2 text-sm text-gray-700">CABLE SUBSCRIPTION</td><td class="px-4 py-2 text-sm text-right font-mono">$5,625</td></tr>
+            <tr><td class="px-4 py-2 text-sm font-semibold text-blue-700">PR</td><td class="px-4 py-2 text-sm text-gray-700">WINNING NEWS JOURNAL</td><td class="px-4 py-2 text-sm text-right font-mono">$5,200</td></tr>
+            <tr><td class="px-4 py-2 text-sm font-semibold text-green-600">Investigative</td><td class="px-4 py-2 text-sm text-gray-700">EXTERNAL PRC</td><td class="px-4 py-2 text-sm text-right font-mono">$4,898</td></tr>
+            <tr><td class="px-4 py-2 text-sm font-semibold text-green-600">Investigative</td><td class="px-4 py-2 text-sm text-gray-700">METRO STORAGE</td><td class="px-4 py-2 text-sm text-right font-mono">$4,550</td></tr>
+            <tr><td class="px-4 py-2 text-sm font-semibold text-purple-700">Utilities</td><td class="px-4 py-2 text-sm text-gray-700">INTERNET ACCOUNTS</td><td class="px-4 py-2 text-sm text-right font-mono">$4,256</td></tr>
+            <tr><td class="px-4 py-2 text-sm font-semibold text-blue-700">PR</td><td class="px-4 py-2 text-sm text-gray-700">SEARCH ENGINE ORGANIZATION MEMBERSHIP</td><td class="px-4 py-2 text-sm text-right font-mono">$4,200</td></tr>
+            <tr><td class="px-4 py-2 text-sm font-semibold text-yellow-700">Legal</td><td class="px-4 py-2 text-sm text-gray-700">RICK MOXON</td><td class="px-4 py-2 text-sm text-right font-mono">$3,800</td></tr>
+            <tr><td class="px-4 py-2 text-sm font-semibold text-blue-700">PR</td><td class="px-4 py-2 text-sm text-gray-700">TEAM DAILY PLANNING</td><td class="px-4 py-2 text-sm text-right font-mono">$3,250</td></tr>
+            <tr><td class="px-4 py-2 text-sm font-semibold text-green-700">Supplies</td><td class="px-4 py-2 text-sm text-gray-700">FEDEX</td><td class="px-4 py-2 text-sm text-right font-mono">$3,100</td></tr>
+            <tr><td class="px-4 py-2 text-sm font-semibold text-purple-700">Utilities</td><td class="px-4 py-2 text-sm text-gray-700">UTILITIES</td><td class="px-4 py-2 text-sm text-right font-mono">$3,000</td></tr>
+            <tr><td class="px-4 py-2 text-sm font-semibold text-blue-700">PR</td><td class="px-4 py-2 text-sm text-gray-700">DISSEM PROPS SETASIDES</td><td class="px-4 py-2 text-sm text-right font-mono">$2,950</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="text-xs text-gray-400 mt-2">Click column headers to sort</div>
+    </div>
+    <!-- FOOTER -->
+    <footer class="text-center text-gray-300 pt-8 pb-5 text-sm">
+      Financial Dashboard &copy; 2024 &mdash; Custom designed for PDF export and on-screen insights.
     </footer>
-
-    <!-- Include the parsed data -->
-    <script src="data.js"></script>
-    <!-- Include the main script for chart generation and table population -->
-    <script src="script.js"></script>
+  </div>
+  <script>
+    // Data for charts
+    const monthlyLabels = ["JAN", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "OCT/NOV"];
+    const monthlyTotals = [227000, 110000, 103000, 117000, 117000, 123000, 120000, 119000, 117465];
+    const bureauLabels = ["INVEST BUREAU", "PUBLIC RELATIONS BUREAU", "LEGAL BUREAU", "DISSEM BUREAU", "OTHER BUREAUS"];
+    const bureauTotals = [250000, 200000, 120000, 40000, 20465];
+    const bureauColors = ['#6fa3ef','#ffb366','#b494eb','#68d4b4','#ececec'];
+    const topRecipientsLabels = [
+      "CSI INVESTIGATIONS EJA (ABELSON)",
+      "BISCEGLIE & WALSH",
+      "CSI INVESTIGATIONS M&K",
+      "GRIEBOSKI",
+      "GREG MITCHELL RETAINER",
+      "LIEBERMAN (RABINOWITZ, BOUDIN)",
+      "MOXON & KOBRIN FIRM BASICS",
+      "ABELSON",
+      "PR EVENTS",
+      "LEXIS NEXIS"
+    ];
+    const topRecipientsData = [159893, 87500, 84500, 50900, 31000, 38000, 41000, 28000, 26000, 15100];
+    const categoryLabels = [
+      "Legal",
+      "PR",
+      "Investigative",
+      "Supplies",
+      "Utilities",
+      "Subscription"
+    ];
+    const categoryTotals = [350000, 220000, 183000, 17500, 16000, 15100];
+    const categoryColors = [
+      "#f59e42", "#60b3e6", "#71c391", "#b494eb", "#68d4b4", "#fd99b6"
+    ];
+    const categoryTrendLabels = monthlyLabels;
+    const legal =      [70000, 41000, 36000, 41000, 41000, 43000, 42000, 41500, 41000];
+    const pr =         [42000, 17000, 21000, 23000, 21000, 22000, 23000, 23000, 23000];
+    const investigative=[95000, 36000, 21200, 19100,18100,22500,21000,20500,21600];
+    const supplies =   [2800, 800, 692, 850, 800, 0, 0, 0, 300];
+    const utilities =  [1500, 900, 940, 900, 860, 900, 870, 870, 900];
+    const subscription=[3789, 1535, 1228, 1535, 1535, 1300, 1535, 1535, 1115];
+    Chart.defaults.font.family = 'Inter, sans-serif';
+    Chart.defaults.plugins.legend.display = false;
+    new Chart(document.getElementById('monthlyTotalSpending'), {
+      type: 'bar',
+      data: {
+        labels: monthlyLabels,
+        datasets: [{
+          label: 'Total Spending',
+          data: monthlyTotals,
+          backgroundColor: [
+            '#7f9cf5','#67e8f9','#facc15','#f472b6','#f59e42', '#60b3e6', '#a7f3d0', '#b494eb', '#fd99b6'
+          ],
+          borderRadius: 14,
+          borderSkipped: false
+        }]
+      },
+      options: {
+        aspectRatio: 2.5,
+        scales: {
+          y: {
+            beginAtZero: true,
+            grid: { color: "#ececec", drawBorder: false },
+            ticks: {
+              callback: val => '$' + val.toLocaleString()
+            }
+          },
+          x: {
+            grid: { display: false }
+          }
+        },
+        plugins: {
+          title: { display: false }
+        }
+      }
+    });
+    new Chart(document.getElementById('bureauSpendingPie'), {
+      type: 'pie',
+      data: {
+        labels: bureauLabels,
+        datasets: [{
+          data: bureauTotals,
+          backgroundColor: bureauColors
+        }]
+      },
+      options: {
+        aspectRatio: 1.5,
+        plugins: {
+          legend: {
+            display: true,
+            position: 'bottom',
+            labels: {
+              color: '#212327',
+              font: { size: 14 }
+            }
+          }
+        }
+      }
+    });
+    new Chart(document.getElementById('topRecipientsBar'), {
+      type: 'bar',
+      data: {
+        labels: topRecipientsLabels,
+        datasets: [{
+          label: 'Total Received',
+          data: topRecipientsData,
+          backgroundColor: '#7f9cf5',
+          borderRadius: 16,
+          borderSkipped: false,
+          maxBarThickness: 28
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        aspectRatio: 2.5,
+        scales: {
+          x: {
+            beginAtZero: true,
+            grid: { color: "#ececec", drawBorder: false },
+            ticks: {
+              callback: val => '$' + val.toLocaleString()
+            }
+          },
+          y: {
+            grid: { display: false },
+            ticks: { color: '#374151', font: { size: 13, weight: 'bold'}}
+          }
+        }
+      }
+    });
+    new Chart(document.getElementById('categoryDistributionPie'), {
+      type: 'pie',
+      data: {
+        labels: categoryLabels,
+        datasets: [{
+          data: categoryTotals,
+          backgroundColor: categoryColors
+        }]
+      },
+      options: {
+        aspectRatio: 1.5,
+        plugins: {
+          legend: {
+            display: true,
+            position: 'bottom',
+            labels: {
+              color: '#212327',
+              font: { size: 14 }
+            }
+          }
+        }
+      }
+    });
+    new Chart(document.getElementById('categoryTrendLine'), {
+      type: 'line',
+      data: {
+        labels: categoryTrendLabels,
+        datasets: [
+          {
+            label: 'Legal',
+            data: legal,
+            borderColor: "#f59e42",
+            backgroundColor: "rgba(245,158,66,0.09)",
+            tension: 0.4,
+            pointRadius: 3,
+            fill: false
+          },
+          {
+            label: 'PR',
+            data: pr,
+            borderColor: "#60b3e6",
+            backgroundColor: "rgba(96,179,230,0.09)",
+            tension: 0.4,
+            pointRadius: 3,
+            fill: false
+          },
+          {
+            label: 'Investigative',
+            data: investigative,
+            borderColor: "#71c391",
+            backgroundColor: "rgba(113,195,145,0.09)",
+            tension: 0.4,
+            pointRadius: 3,
+            fill: false
+          },
+          {
+            label: 'Supplies',
+            data: supplies,
+            borderColor: "#b494eb",
+            backgroundColor: "rgba(180,148,235,0.07)",
+            tension: 0.4,
+            pointRadius: 3,
+            fill: false
+          },
+          {
+            label: 'Utilities',
+            data: utilities,
+            borderColor: "#68d4b4",
+            backgroundColor: "rgba(104,212,180,0.07)",
+            tension: 0.4,
+            pointRadius: 3,
+            fill: false
+          },
+          {
+            label: 'Subscription',
+            data: subscription,
+            borderColor: "#fd99b6",
+            backgroundColor: "rgba(253,153,182,0.07)",
+            tension: 0.4,
+            pointRadius: 3,
+            fill: false
+          }
+        ]
+      },
+      options: {
+        aspectRatio: 2,
+        plugins: {
+          legend: {
+            display: true,
+            position: 'bottom',
+            labels: { color: '#212327', font: { size:14 } }
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            grid: { color: "#ececec", drawBorder: false },
+            ticks: { callback: val => '$' + val.toLocaleString() }
+          },
+          x: {
+            grid: { display: false }
+          }
+        }
+      }
+    });
+    // Table Sorting
+    function sortTable(colIdx) {
+      const tbody = document.getElementById('expense-items-body');
+      const rowsArray = Array.from(tbody.querySelectorAll('tr'));
+      let asc = tbody.getAttribute('data-sortcol') != colIdx.toString();
+      tbody.setAttribute('data-sortcol', asc ? colIdx : '');
+      rowsArray.sort((a, b) => {
+        let valA = a.children[colIdx].innerText || '';
+        let valB = b.children[colIdx].innerText || '';
+        if (colIdx === 2) {
+          valA = parseFloat(valA.replace(/[^0-9.-]+/g,"")) || 0;
+          valB = parseFloat(valB.replace(/[^0-9.-]+/g,"")) || 0;
+        }
+        if (valA < valB) return asc ? -1 : 1;
+        if (valA > valB) return asc ? 1 : -1;
+        return 0;
+      });
+      while (tbody.firstChild) tbody.removeChild(tbody.firstChild);
+      rowsArray.forEach(tr => tbody.appendChild(tr));
+    }
+  </script>
 </body>
 </html>
+
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDh33WhgYXEc8hR5%2Bn%2BIZRsVF%2BqxbqPD7Ez%2B9bykF4x4kN4PtjQwIwFv6anNXJo%2FFaENVQQNzaooCsZ%2FSpLxorwmPlUSGmVBOakZMtk9XGS5vkIoQpwpYi75KU6UZirXCz80s0HLJAFnj4dNtGO1YLPpIy44L1ykrdBBROOP4rCntQjrdNBORNhikW0YPXAyea%2Fqaoi%2FyIYI9gIGzKbPjgsmG9L20WLvliPBWI4Q5w%2FXGQfCZZzUyu6Qbu2gfToaB7t90oMgIK1FDoUPbYxswj2WMWxr9TXadxm9uYrSkrRCCMWo%2BiXzFuJu1MXnirHUoEkCNQLNLHALPuSqxAN9qORQpg6kBuYZX%2BHeGvlbLXF6otgooNV7yQtKWcsmxMMSOesTrQxTaFvWn4m%2B6xkEA3OOOnb88ujjQ%2FguRNvutJYeWSiu0qRNbWdT7a%2B3SRIB2%2FsLRTDLxPDGdBurGCio%2B3hloySCOfQ6sdE3ZK7P6y8Y1rvVpqDvKZ5icH8SSqWqEFkvc0eMS8bHPQweuqGVHcRQ%3D";
+        window.__genspark_locale = "en-US";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDh33WhgYXEc8hR5+n+IZRsVF+qxbqPD7Ez+9bykF4x4kN4PtjQwIwFv6anNXJo/FaENVQQNzaooCsZ/SpLxorwmPlUSGmVBOakZMtk9XGS5vkIoQpwpYi75KU6UZirXCz80s0HLJAFnj4dNtGO1YLPpIy44L1ykrdBBROOP4rCntQjrdNBORNhikW0YPXAyea/qaoi/yIYI9gIGzKbPjgsmG9L20WLvliPBWI4Q5w/XGQfCZZzUyu6Qbu2gfToaB7t90oMgIK1FDoUPbYxswj2WMWxr9TXadxm9uYrSkrRCCMWo+iXzFuJu1MXnirHUoEkCNQLNLHALPuSqxAN9qORQpg6kBuYZX+HeGvlbLXF6otgooNV7yQtKWcsmxMMSOesTrQxTaFvWn4m+6xkEA3OOOnb88ujjQ/guRNvutJYeWSiu0qRNbWdT7a+3SRIB2/sLRTDLxPDGdBurGCio+3hloySCOfQ6sdE3ZK7P6y8Y1rvVpqDvKZ5icH8SSqWqEFkvc0eMS8bHPQweuqGVHcRQ=";
+    </script>
+    
